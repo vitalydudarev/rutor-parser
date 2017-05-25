@@ -17,13 +17,14 @@ class PageParser:
         return len(self.__details_elem) > 0
 
     def parse(self):
-        title = self.__tree.xpath('//div/h1/text()')[0].encode('utf-8')
+        title = self.__tree.xpath('//div/h1/text()')[0]
         info = self.__get_info()
 
-        category = info[u'Категория'].xpath('./a/text()')[0].encode('utf-8')
-        size = info[u'Размер'].xpath('text()')[0].encode('utf-8')
+        category = info[u'Категория'].xpath('./a/text()')[0]
+        size = info[u'Размер'].xpath('text()')[0]
+        added = info[u'Добавлен'].xpath('text()')[0]
 
-        torrent_info = TorrentInfo(self.__page_id, title, category, size)
+        torrent_info = TorrentInfo(self.__page_id, title, category, size, added)
 
         return torrent_info
 
@@ -43,12 +44,13 @@ class PageParser:
         return result
 
 class TorrentInfo:
-    def __init__(self, torrent_id, title, category, size):
+    def __init__(self, torrent_id, title, category, size, added):
         self.torrent_id = torrent_id
         self.title = title
         self.category = category
         self.size = size
+        self.added = added
 
     def to_json(self):
-        dict = {'torrent_id': torrent_id, 'title': self.title, 'category': self.category, 'size': self.size}
-        return json.dumps(dict)
+        dict = {'torrent_id': self.torrent_id, 'title': self.title, 'category': self.category, 'size': self.size, 'added': self.added}
+        return json.dumps(dict, ensure_ascii=False)
