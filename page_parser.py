@@ -3,6 +3,7 @@
 from lxml import html, etree
 from HTMLParser import HTMLParser
 import json
+import pymysql.cursors
 
 
 class PageParser:

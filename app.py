@@ -96,14 +96,14 @@ def dump():
             else:
                 print str(last_torrent_id) + ' is invalid'
                 failed = failed + 1
-                if failed == 5:
+                if failed == 10:
                     print 'end of torrent list reached'
-                    last_torrent_id = last_torrent_id - 5
+                    last_torrent_id = last_torrent_id - 10 - 1
                     break
 
         i = i + 1
 
-        time.sleep(5)
+        time.sleep(4)
 
     dump = json.dumps(res, cls=MyEncoder, ensure_ascii=False)
     save_dump(dump)
